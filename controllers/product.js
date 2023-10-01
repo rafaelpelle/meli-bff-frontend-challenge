@@ -5,6 +5,11 @@ const { parseProductsList } = require("../helpers/parser");
 async function getProductsList(req, res) {
   try {
     const { q } = req.query;
+
+    if (!q) {
+      throw new Error("Query param 'q' is required");
+    }
+
     const { data } = await axios.get(
       `https://api.mercadolibre.com/sites/MLA/search?q=${q}`,
     );
