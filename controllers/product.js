@@ -32,6 +32,8 @@ async function getProductDetails(req, res) {
       axios.get(`https://api.mercadolibre.com/items/${id}/description`),
     ]);
 
+    // Docs:
+    // https://developers.mercadolivre.com.br/pt_br/categorizacao-de-produtos
     const categoriesRes = await axios.get(
       `https://api.mercadolibre.com/categories/${detailsRes.data.category_id}`,
     );
