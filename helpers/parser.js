@@ -8,6 +8,10 @@ function getCategoriesFromList(data) {
   return categories.values[0].path_from_root.map(({ name }) => name);
 }
 
+function getCategoriesFromCategoryItem(category) {
+  return category.path_from_root.map(({ name }) => name);
+}
+
 function parseProductListItem(product) {
   return {
     id: product.id,
@@ -31,10 +35,10 @@ function parseProductsList(data) {
   };
 }
 
-function parseProductDetails(data, description) {
+function parseProductDetails(data, description, category) {
   return {
     author,
-    categories: [],
+    categories: getCategoriesFromCategoryItem(category),
     item: {
       ...parseProductListItem(data),
       picture: data.pictures[0].secure_url,

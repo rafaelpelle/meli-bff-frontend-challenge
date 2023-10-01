@@ -32,7 +32,17 @@ async function getProductDetails(req, res) {
       axios.get(`https://api.mercadolibre.com/items/${id}/description`),
     ]);
 
-    res.send(parseProductDetails(detailsRes.data, descriptionRes.data));
+    const categoriesRes = await axios.get(
+      `https://api.mercadolibre.com/categories/${detailsRes.data.category_id}`,
+    );
+
+    res.send(
+      parseProductDetails(
+        detailsRes.data,
+        descriptionRes.data,
+        categoriesRes.data,
+      ),
+    );
   } catch (error) {
     return errorResponse(res, error);
   }
