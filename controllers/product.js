@@ -15,7 +15,6 @@ async function getProductsList(req, res) {
     );
     res.send(parseProductsList(data));
   } catch (error) {
-    console.log(error.msg);
     return errorResponse(res, error);
   }
 }
