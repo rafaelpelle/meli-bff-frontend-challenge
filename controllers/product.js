@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { errorResponse } = require("../helpers/apiResponse");
-const { parseProductsList } = require("../helpers/parser");
+const { parseProductsList, parseProductDetails } = require("../helpers/parser");
 
 async function getProductsList(req, res) {
   try {
@@ -19,9 +19,23 @@ async function getProductsList(req, res) {
   }
 }
 
-function getProductDetails(req, res) {
-  const productId = req.params.id;
-  res.send("GET product details" + productId);
+async function getProductDetails(req, res) {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      throw new Error("Param 'id' is required");
+    }
+
+    const [detailsRes, descriptionRes] = await Promise.all([
+      axios.get(`https://api.mercadolibre.com/items/${id}`),
+      axios.get(`https://api.mercadolibre.com/items/${id}/description`),
+    ]);
+
+    res.send(parseProductDetails(detailsRes.data, descriptionRes.data));
+  } catch (error) {
+    return errorResponse(res, error);
+  }
 }
 
 module.exports = {

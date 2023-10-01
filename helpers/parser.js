@@ -31,6 +31,20 @@ function parseProductsList(data) {
   };
 }
 
+function parseProductDetails(data, description) {
+  return {
+    author,
+    categories: [],
+    item: {
+      ...parseProductListItem(data),
+      picture: data.pictures[0].secure_url,
+      sold_quantity: data.sold_quantity,
+      description: description.plain_text,
+    },
+  };
+}
+
 module.exports = {
   parseProductsList,
+  parseProductDetails,
 };
