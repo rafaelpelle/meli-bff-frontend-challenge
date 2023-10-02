@@ -21,7 +21,7 @@ function parseProductListItem(product) {
       amount: product.price,
       decimals: 0,
     },
-    picture: product.thumbnail,
+    picture: product.thumbnail.replace("http", "https"),
     condition: product.condition,
     free_shipping: product.shipping.free_shipping,
   };
